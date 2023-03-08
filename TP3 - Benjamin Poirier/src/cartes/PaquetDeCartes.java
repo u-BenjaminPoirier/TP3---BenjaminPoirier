@@ -1,67 +1,72 @@
-package tp5G1PoirierB2242919.paquet;
+package cartes;
 
-import tp5G1PoirierB2242919.utile.TableauObject;
-import tp5G1PoirierB2242919.utile.Utile;
+import java.util.ArrayList;
+import java.util.Objects;
 
-import java.util.Arrays;
+public class PaquetDeCartes {
 
-import static tp5G1PoirierB2242919.paquet.Carte.COULEURS_VALIDES;
-import static tp5G1PoirierB2242919.paquet.Carte.couleurEstValide;
+    final public static int NBR_ECHANGE = 100;
+    private ArrayList<Carte> paquet;
 
-
-public class Paquet {
-
-    public TableauObject paquet;
-
-    public Paquet(boolean melange) {
-        remplirPaquet();
-        if (melange == true) {
-            melanger();
-        }
+    public PaquetDeCartes(ArrayList<Carte> list) {
+        paquet = list;
     }
 
-    public boolean estVide() {
-        return paquet.longueur == 0;
+    public PaquetDeCartes() {
+        //Remplir le paquet 4*13
     }
 
-    public int getNombreDeCartes() {
-        return paquet.longueur;
-    }
+    public void brasser() {
+        int i = 0;
+        Carte o;
 
-    public void melanger() {
-        paquet.shuffle();
-    }
+        while (i < NBR_ECHANGE) {
+            int r1 = (int) Math.floor(Math.random() * (paquet.size() - 1 + 1) + 0);
+            int r2 = (int) Math.floor(Math.random() * (paquet.size() - 1 + 1) + 0);
 
-    public Carte piger() {
-        Carte carte = (Carte) paquet.remove(0);
-
-        return carte;
-
-    }
-
-    private void remplirPaquet() {
-        this.paquet = new TableauObject(52);
-        int indexDeCarte = 0;
-        String couleur;
-
-        for (int i = 1; i <= 13; i++) {
-            for (int j = 0; j <= 3; j++) {
-                couleur = COULEURS_VALIDES[j];
-                paquet.t1[indexDeCarte] = new Carte(i, couleur);
-                indexDeCarte++;
+            if (!(r1 == r2)){
+                permuterCarte(r1,r2);
+                i++;
             }
         }
     }
 
+    private void permuterCarte(int index1, int index2){
+        Carte o1;
+        Carte o2;
 
-    @Override
-    public String toString() {
-        String resultat = "";
+        o1 = paquet.get(index1);
+        o2 = paquet.get(index2);
 
-        for (int i = 0; i < paquet.longueur; i++) {
-            resultat += paquet.t1[i];
-        }
-        
-        return resultat;
+        paquet.remove(index1);
+        paquet.add(index1, o2);
+        paquet.add(index2, o1);
+        paquet.remove(index2);
     }
+
+    public Carte consulterCarte(int position) {
+        return paquet.get(position);
+    }
+
+    public boolean isEmpty() {
+        return paquet.size() == 0;
+    }
+
+    public int size() {
+        return paquet.size();
+    }
+
+    public Carte prendreCarte(int position) {
+        Carte c;
+        c = paquet.get(position);
+        paquet.remove(position);
+        return c;
+    }
+
+
+    public void retournerTouteLesCartes(Boolean visible){
+
+    }
+
+
 }
