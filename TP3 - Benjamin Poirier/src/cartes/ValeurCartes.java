@@ -14,4 +14,19 @@ public enum ValeurCartes{
     V_JACK("J", 11),
     V_QUEEN("Q", 12),
     V_KING("K", 13);
+
+    private String symbole;
+    private int valeur;
+
+    private ValeurCartes(String symbole , int valeur){
+        this.valeur = valeur;
+        this.symbole = symbole;
+    }
+    public String getSymbole(){
+        return symbole;
+    }
+
+    public int getValeur() {
+        return valeur;
+    }
 }
